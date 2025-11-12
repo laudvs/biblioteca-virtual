@@ -4,6 +4,21 @@ if(!isset($_SESSION['usuario'])){
   header("Location: login.php");
   exit();
 }
+
+// Conexão com o banco
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "booklovers";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+  die("Erro na conexão: " . $conn->connect_error);
+}
+
+// Buscar livros cadastrados
+$sql = "SELECT * FROM livros ORDER BY id DESC";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -29,51 +44,32 @@ if(!isset($_SESSION['usuario'])){
 </header>
 
 <main class="conteudo">
-<h2>Explore nossos livros</h2>
+    <div class="cabecalho-livros">
+        <h2>Explore nossos livros</h2>
+        <a href="adicionar_livro.php" class="botao-adicionar">➕ Adicionar Livro</a>
+    </div>
+    <div class="livros-container">
+        <?php
+        $sql = "SELECT * FROM livros";
+        $resultado = $conn->query($sql);
 
-<div class="livros-container">
+        if ($resultado->num_rows > 0) {
+            while ($livro = $resultado->fetch_assoc()) {
+                echo '<div class="livro-card">';
+                echo '<img src="' . htmlspecialchars($livro['capa']) . '" alt="Capa do livro">';
+                echo '<h3>' . htmlspecialchars($livro['titulo']) . '</h3>';
+                echo '<p><strong>Autor:</strong> ' . htmlspecialchars($livro['autor']) . '</p>';
+                echo '<p class="descricao">' . htmlspecialchars($livro['descricao']) . '</p>';
+                echo '<button>Ver mais</button>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>Nenhum livro encontrado no momento.</p>';
+        }
 
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/715JOcuqSSL._SL1021_.jpg">
-<h3>A Metamorfose</h3>
-<p><strong>Autor:</strong> Franz Kafka</p>
-<p class="descricao">O caixeiro-viajante Gregor acorda metamorfoseado em um inseto...</p>
-<button>Ver mais</button>
-</div>
-
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/9157mzaUZ1L._SL1500_.jpg">
-<h3>Pequena Coreografia do Adeus</h3>
-<p><strong>Autor:</strong> Aline Bei</p>
-<p class="descricao">Entre lembranças da infância e da adolescência...</p>
-<button>Ver mais</button>
-</div>
-
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/81sblL-t2iL._SL1417_.jpg">
-<h3>Declínio de um Homem</h3>
-<p><strong>Autor:</strong> Osamu Dazai</p>
-<p class="descricao">A obra sintetiza passagens biográficas...</p>
-<button>Ver mais</button>
-</div>
-
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/61t0bwt1s3L._SL1000_.jpg">
-<h3>1984</h3>
-<p><strong>Autor:</strong> George Orwell</p>
-<p class="descricao">Winston reescreve artigos para o Partido...</p>
-<button>Ver mais</button>
-</div>
-
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/618-b9Im6dL._SL1457_.jpg">
-<h3>Vidas Secas</h3>
-<p><strong>Autor:</strong> Graciliano Ramos</p>
-<p class="descricao">A crueldade da seca no sertão nordestino...</p>
-<button>Ver mais</button>
-</div>
-
-</div>
+        $conn->close();
+        ?>
+    </div>
 </main>
 
 <footer>
@@ -81,3 +77,5 @@ if(!isset($_SESSION['usuario'])){
 </footer>
 </body>
 </html>
+
+<?php $conn->close(); ?>

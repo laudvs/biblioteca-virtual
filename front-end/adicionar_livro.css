@@ -1,0 +1,119 @@
+/* ======= ADICIONAR_LIVRO.CSS ======= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(120deg, #f4e3ff, #f9f9fb);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* ====== TOPO ====== */
+.topo {
+  background: linear-gradient(90deg, #6a0dad, #3b3b98);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.topo a {
+  color: white;
+  text-decoration: none;
+  border: 1px solid #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.topo a:hover {
+  background: white;
+  color: #6a0dad;
+}
+
+/* ====== FORM ====== */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.form-container {
+  background: white;
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #3b3b98;
+  font-weight: 600;
+}
+
+form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #555;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: 0.3s;
+  resize: none;
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: #6a0dad;
+  box-shadow: 0 0 5px rgba(106, 13, 173, 0.3);
+  outline: none;
+}
+
+button {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.8rem;
+  background: linear-gradient(90deg, #6a0dad, #3b3b98);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/* ====== RODAPÉ ====== */
+footer {
+  text-align: center;
+  background: #3b3b98;
+  color: white;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+}

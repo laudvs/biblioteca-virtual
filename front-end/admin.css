@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f4fb;
+  color: #333;
+  margin: 0;
+}
+
+header {
+  background-color: #5a3ea6;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  max-width: 900px;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ddd;
+}
+
+.form-livro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.form-livro input, .form-livro textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-livro button {
+  background-color: #5a3ea6;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.livros-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.livro-item {
+  display: flex;
+  gap: 20px;
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.livro-item img {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 5px;
+}

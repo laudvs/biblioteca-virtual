@@ -1,134 +1,137 @@
+/* ======= LIVROS.CSS ======= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f6ff;
-    margin: 0;
-    padding: 0;
-    color: #2c2c2c;
+  background-color: #f9f9fb;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Cabeçalho */
-header.topo {
-    background-color: #4b0082;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
+/* ====== TOPO ====== */
+.topo {
+  background: linear-gradient(90deg, #6a0dad, #3b3b98);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-header h1 {
-    font-size: 1.8em;
+.topo h1 {
+  font-weight: 600;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-    margin: 0;
-    padding: 0;
+.topo nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
+.topo nav a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-nav a:hover, nav a.ativo {
-    color: #ff80ff;
+.topo nav a:hover,
+.topo nav a.ativo {
+  color: #ffccff;
+  border-bottom: 2px solid #ffccff;
 }
 
-/* Conteúdo principal */
+/* ====== CONTEÚDO ====== */
 .conteudo {
-    text-align: center;
-    padding: 40px 20px;
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .conteudo h2 {
-    color: #4b0082;
-    margin-bottom: 30px;
+  text-align: center;
+  color: #3b3b98;
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
 
-/* Cards de livros */
+/* ====== LIVROS ====== */
 .livros-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    justify-items: center;
-    padding: 0 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 
 .livro-card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    max-width: 260px;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .livro-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
 .livro-card img {
-    width: 100%;
-    height: 360px;
-    object-fit: cover;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
 }
 
 .livro-card h3 {
-    font-size: 1.2em;
-    margin: 10px 0;
+  margin: 1rem;
+  color: #6a0dad;
+  font-size: 1.2rem;
 }
 
 .livro-card p {
-    margin: 5px 15px;
-    font-size: 0.95em;
+  margin: 0 1rem 0.5rem 1rem;
+  color: #555;
+  font-size: 0.95rem;
 }
 
 .livro-card .descricao {
-    font-style: italic;
-    color: #555;
+  font-style: italic;
+  color: #777;
+  margin-bottom: 1rem;
 }
 
 .livro-card button {
-    background-color: #4b0082;
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background 0.3s;
+  background: linear-gradient(90deg, #6a0dad, #3b3b98);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  margin: 0 1rem 1rem;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .livro-card button:hover {
-    background-color: #6a0dad;
+  opacity: 0.9;
+  transform: scale(1.03);
 }
 
-/* Rodapé */
+/* ====== RODAPÉ ====== */
 footer {
-    background-color: #4b0082;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    font-size: 0.9em;
-    margin-top: 40px;
-}
-
-/* Responsividade */
-@media (max-width: 600px) {
-    header.topo {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-
-    .livros-container {
-        grid-template-columns: 1fr;
-        padding: 0 20px;
-    }
+  background-color: #3b3b98;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
 }
