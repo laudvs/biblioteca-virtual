@@ -1,50 +1,53 @@
-## 📚 BookLovers — Biblioteca Virtual
+# 📚 **BookLovers — Biblioteca Virtual**
 
-O **BookLovers** é um sistema para amantes da leitura que desejam organizar suas obras, acompanhar progresso literário e descobrir novos livros.
-O projeto inclui funcionalidades de cadastro, login e visualização de livros, sendo ideal para prática de desenvolvimento web e integração com banco de dados.
-
----
-
-## 🚀 Tecnologias utilizadas
-
-| Área           | Tecnologias             |
-| -------------- | ----------------------- |
-| Front-end      | HTML5, CSS3, JavaScript |
-| Back-end       | PHP                     |
-| Banco de Dados | MySQL                   |
-| Servidor local | XAMPP                   |
+O **BookLovers** é um sistema para amantes da leitura que desejam organizar suas obras, acompanhar o progresso literário e descobrir novos livros.
+O projeto inclui funcionalidades de **cadastro, login e gerenciamento de livros**, sendo ideal para prática de **desenvolvimento web completo** com integração a banco de dados.
 
 ---
 
-## ✨ Funcionalidades
+## 🚀 **Tecnologias utilizadas**
+
+| Área               | Tecnologias             |
+| ------------------ | ----------------------- |
+| 🖥️ Front-end      | HTML5, CSS3, JavaScript |
+| ⚙️ Back-end        | PHP                     |
+| 🗄️ Banco de Dados | MySQL                   |
+| 🌐 Servidor local  | XAMPP                   |
+
+---
+
+## ✨ **Funcionalidades**
 
 ✅ Cadastro de usuários
 ✅ Login com sessão
 ✅ Mensagens de erro e sucesso via `$_SESSION`
 ✅ Página inicial com destaques
-✅ Página de listagem de livros estática
+✅ Página de listagem dinâmica de livros
+✅ Adição de novos livros (com formulário protegido)
 
-🔜 Em desenvolvimento:
+🔜 **Em desenvolvimento:**
 
-* Área do usuário
-* CRUD de livros (adicionar, editar, excluir)
-* Upload de capas
-* Progresso de leitura
-
----
-
-## 🧠 Objetivo do projeto
-
-O projeto foi desenvolvido para fins acadêmicos e aprimoramento prático em:
-
-* Desenvolvimento web completo (front + back)
-* Manipulação de banco de dados
-* Tratamento seguro de senhas (`password_hash`)
-* Gerenciamento de sessão no PHP
+* Área do administrador
+* Edição e exclusão de livros (CRUD completo)
+* Upload de imagens para capas
+* Sistema de comentários e avaliações
+* Acompanhamento de progresso de leitura
 
 ---
 
-## 🗂 Estrutura do projeto
+## 🧠 **Objetivo do projeto**
+
+Este projeto foi desenvolvido com fins acadêmicos e práticos, visando o aperfeiçoamento em:
+
+* Desenvolvimento web completo (Front + Back-end)
+* Integração e manipulação de banco de dados MySQL
+* Segurança no armazenamento de senhas (`password_hash`)
+* Controle de sessões e autenticação de usuários em PHP
+* Estruturação de sistemas modulares com boas práticas
+
+---
+
+## 🗂️ **Estrutura do projeto**
 
 ```
 BookLovers/
@@ -52,29 +55,37 @@ BookLovers/
 ├── front-end/
 │   ├── index.php
 │   ├── login.php
+│   ├── admin.php
+│   ├── admin.css
 │   ├── cadastro.php
 │   ├── livros.php
+│   ├── livro_detalhe.php
+│   ├── adicionar_livro.php
 │   ├── style.css
-│   ├── script.js
-│   └── livros.css
+│   ├── livros.css
+│   ├── adicionar_livro.php
+│   └── sucesso_livro.css
 │
 ├── back-end/
-│   ├── cadastrar_livro.php
-│   ├── cadastro_process.php
 │   ├── conexao.php
-│   ├── livros.php
+│   ├── cadastro.php
+│   ├── cadastro_process.php
+│   ├── login.php
 │   ├── login_process.php
-│   └── cadastro.php
+│   ├── logout.php
+│   ├── processar_livro.php
+│   ├── cadastrar_livro.php
+│   └── livros.php
 │
 └── banco_dados/
     └── booklovers.sql
 ```
 
-> Essa estrutura pode evoluir conforme novas funcionalidades forem criadas.
+> 📁 Essa estrutura pode ser expandida conforme novas funcionalidades forem implementadas.
 
 ---
 
-## 💾 Banco de Dados
+## 💾 **Banco de Dados**
 
 ```sql
 CREATE DATABASE IF NOT EXISTS booklovers;
@@ -87,24 +98,32 @@ CREATE TABLE usuarios (
     senha VARCHAR(255) NOT NULL,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE livros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(200) NOT NULL,
+    autor VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL,
+    capa VARCHAR(255) NOT NULL,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ---
 
-## 👩‍💻 Como executar o projeto
+## ⚙️ **Como executar o projeto**
 
-1. Instale o **XAMPP**
-2. Inicie **Apache** e **MySQL**
-3. Importe o arquivo SQL no phpMyAdmin
-4. Coloque o projeto em `htdocs`
-5. Acesse no navegador:
-
-```
-http://localhost/BookLovers/front-end/index.php
-```
+1. Instale e abra o **XAMPP**
+2. Inicie os módulos **Apache** e **MySQL**
+3. No **phpMyAdmin**, importe o arquivo `booklovers.sql`
+4. Coloque a pasta do projeto em:
+   `C:\xampp\htdocs\BookLovers`
+5. Acesse pelo navegador:
+   👉 [http://localhost/BookLovers/front-end/index.php](http://localhost/BookLovers/front-end/index.php)
 
 ---
 
-## 💜 Desenvolvido por
+## 💜 **Desenvolvido por**
 
-**Laurah Dias** — estudante de Sistemas de Informação
+👩‍💻 **Laurah Dias**
+Estudante de **Sistemas de Informação** | Projeto acadêmico integrador
