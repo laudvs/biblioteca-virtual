@@ -1,11 +1,10 @@
 <?php
 session_start();
-if(!isset($_SESSION['usuario'])){
-  header("Location: login.php");
-  exit();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
 }
 
-// Conexão com o banco
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,12 +12,12 @@ $dbname = "booklovers";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-  die("Erro na conexão: " . $conn->connect_error);
+    die("Erro na conexão: " . $conn->connect_error);
 }
 
-// Buscar livros cadastrados
-$sql = "SELECT * FROM livros ORDER BY id DESC";
-$result = $conn->query($sql);
+$usuarioId = $_SESSION['id_usuario'];
+$sql = "SELECT * FROM livros WHERE usuario_id = $usuarioId ORDER BY id DESC";
+$resultado = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -45,14 +44,13 @@ $result = $conn->query($sql);
 
 <main class="conteudo">
     <div class="cabecalho-livros">
-        <h2>Explore nossos livros</h2>
+        <h2>Meus livros</h2>
         <a href="adicionar_livro.php" class="botao-adicionar">➕ Adicionar Livro</a>
     </div>
-    <div class="livros-container">
-        <?php
-        $sql = "SELECT * FROM livros";
-        $resultado = $conn->query($sql);
 
+    <div class="livros-container">
+
+        <?php
         if ($resultado->num_rows > 0) {
             while ($livro = $resultado->fetch_assoc()) {
                 echo '<div class="livro-card">';
@@ -60,15 +58,15 @@ $result = $conn->query($sql);
                 echo '<h3>' . htmlspecialchars($livro['titulo']) . '</h3>';
                 echo '<p><strong>Autor:</strong> ' . htmlspecialchars($livro['autor']) . '</p>';
                 echo '<p class="descricao">' . htmlspecialchars($livro['descricao']) . '</p>';
-                echo '<button>Ver mais</button>';
                 echo '</div>';
             }
         } else {
-            echo '<p>Nenhum livro encontrado no momento.</p>';
+            echo '<p>Nenhum livro encontrado ainda. Adicione o seu primeiro livro! 📘</p>';
         }
 
         $conn->close();
         ?>
+
     </div>
 </main>
 
@@ -77,5 +75,3 @@ $result = $conn->query($sql);
 </footer>
 </body>
 </html>
-
-<?php $conn->close(); ?>

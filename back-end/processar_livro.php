@@ -1,29 +1,31 @@
 <?php
 session_start();
-include("conexao.php");
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $titulo = trim($_POST['titulo']);
-    $autor = trim($_POST['autor']);
-    $descricao = trim($_POST['descricao']);
-    $capa = trim($_POST['capa']);
-
-    if (!empty($titulo) && !empty($autor) && !empty($descricao) && !empty($capa)) {
-        $stmt = $conn->prepare("INSERT INTO livros (titulo, autor, descricao, capa) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $titulo, $autor, $descricao, $capa);
-
-        if ($stmt->execute()) {
-            $_SESSION['mensagem'] = "Livro cadastrado com sucesso!";
-        } else {
-            $_SESSION['mensagem'] = "Erro ao cadastrar o livro.";
-        }
-
-        $stmt->close();
-    } else {
-        $_SESSION['mensagem'] = "Preencha todos os campos!";
-    }
-
-    header("Location: ../front-end/sucesso_livro.php");
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ../front-end/login.php");
     exit();
 }
+
+$usuarioId = $_SESSION['id_usuario'];
+
+$titulo = $_POST['titulo'];
+$autor = $_POST['autor'];
+$descricao = $_POST['descricao'];
+$capa = $_POST['capa'];
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "booklovers";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+$stmt = $conn->prepare("INSERT INTO livros (titulo, autor, descricao, capa, usuario_id) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssi", $titulo, $autor, $descricao, $capa, $usuarioId);
+$stmt->execute();
+
+$stmt->close();
+$conn->close();
+
+header("Location: ../front-end/livros.php");
+exit();
 ?>

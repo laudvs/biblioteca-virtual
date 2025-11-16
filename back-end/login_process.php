@@ -1,31 +1,66 @@
 <?php
 session_start();
-include('conexao.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $senha = $_POST['password'];
+// Conexão
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "booklovers";
 
-    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($resultado->num_rows === 1) {
-        $usuario = $resultado->fetch_assoc();
+// Verifica erro de conexão
+if ($conn->connect_error) {
+    die("Erro de conexão: " . $conn->connect_error);
+}
 
-        if (password_verify($senha, $usuario['senha'])) {
-            $_SESSION['usuario'] = $usuario['username'];
-            header("Location: ../front-end/index.php"); 
-            exit();
-        } else {
-            $_SESSION['message'] = "Senha incorreta!";
-        }
+// Verifica se os campos vieram via POST
+if (!isset($_POST['username']) || !isset($_POST['password'])) {
+    $_SESSION['erro'] = "Preencha todos os campos!";
+    header("Location: http://localhost/booklovers/front-end/login.php");
+    exit();
+}
+
+// Sanitiza entradas
+$username_input = trim($_POST['username']);
+$password_input = trim($_POST['password']);
+
+// Consulta preparada
+$sql = "SELECT * FROM usuarios WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username_input);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Verifica usuário
+if ($result->num_rows > 0) {
+
+    $usuario = $result->fetch_assoc();
+
+    if (password_verify($password_input, $usuario['senha'])) {
+
+        // Login OK → Salva sessão
+        $_SESSION['usuario'] = $usuario['username'];
+        $_SESSION['id_usuario'] = $usuario['id'];
+
+        $stmt->close();
+        $conn->close();
+        header("Location: http://localhost/booklovers/front-end/index.php");
+        exit();
+
     } else {
-        $_SESSION['message'] = "Usuário não encontrado!";
+        $_SESSION['erro'] = "Senha incorreta!";
+        $stmt->close();
+        $conn->close();
+        header("Location: http://localhost/booklovers/front-end/login.php");
+        exit();
     }
 
-    header("Location: ../front-end/login.php");
+} else {
+    $_SESSION['erro'] = "Usuário não encontrado!";
+    $stmt->close();
+    $conn->close();
+    header("Location: http://localhost/booklovers/front-end/login.php");
     exit();
 }
 ?>
