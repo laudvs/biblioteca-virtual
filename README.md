@@ -20,13 +20,21 @@ O projeto foi desenvolvido para prática de Programação Web.
 ## ✨ **Funcionalidades**
 
 ✅ Cadastro de usuários
+
 ✅ Login por sessão
+
 ✅ Área do administrador
+
 ✅ Mensagens de erro e sucesso via `$_SESSION`
+
 ✅ Página inicial com destaques
+
 ✅ Página de listagem de livros
+
 ✅ Adição de novos livros (com formulário protegido)
+
 ✅ Sistema de comentários e avaliações
+
 ✅ Edição e exclusão de livros (CRUD completo)
 
 🔜 **Em desenvolvimento:**
