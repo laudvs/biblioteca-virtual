@@ -2,6 +2,7 @@
 
 O **BookLovers** é um sistema para amantes da leitura que desejam organizar suas obras, acompanhar o progresso literário e descobrir novos livros.
 O projeto inclui funcionalidades de **cadastro, login e gerenciamento de livros**, sendo ideal para prática de **desenvolvimento web completo** com integração a banco de dados.
+O projeto foi desenvolvido para prática de Programação Web.
 
 ---
 
@@ -9,7 +10,7 @@ O projeto inclui funcionalidades de **cadastro, login e gerenciamento de livros*
 
 | Área               | Tecnologias             |
 | ------------------ | ----------------------- |
-| 🖥️ Front-end      | HTML5, CSS3, JavaScript |
+| 🖥️ Front-end      | HTML5, CSS3             |
 | ⚙️ Back-end        | PHP                     |
 | 🗄️ Banco de Dados | MySQL                   |
 | 🌐 Servidor local  | XAMPP                   |
@@ -19,18 +20,17 @@ O projeto inclui funcionalidades de **cadastro, login e gerenciamento de livros*
 ## ✨ **Funcionalidades**
 
 ✅ Cadastro de usuários
-✅ Login com sessão
+✅ Login por sessão
+✅ Área do administrador
 ✅ Mensagens de erro e sucesso via `$_SESSION`
 ✅ Página inicial com destaques
-✅ Página de listagem dinâmica de livros
+✅ Página de listagem de livros
 ✅ Adição de novos livros (com formulário protegido)
+✅ Sistema de comentários e avaliações
+✅ Edição e exclusão de livros (CRUD completo)
 
 🔜 **Em desenvolvimento:**
 
-* Área do administrador
-* Edição e exclusão de livros (CRUD completo)
-* Upload de imagens para capas
-* Sistema de comentários e avaliações
 * Acompanhamento de progresso de leitura
 
 ---
@@ -57,6 +57,7 @@ BookLovers/
 │   ├── login.php
 │   ├── admin.php
 │   ├── admin.css
+│   ├── mudar_senha_admin.php
 │   ├── cadastro.php
 │   ├── livros.php
 │   ├── livro_detalhe.php
@@ -74,7 +75,7 @@ BookLovers/
 │   ├── login_process.php
 │   ├── logout.php
 │   ├── processar_livro.php
-│   ├── cadastrar_livro.php
+│   ├── salvar_nova_senha_admin.php
 │   └── livros.php
 │
 └── banco_dados/
@@ -96,6 +97,8 @@ CREATE TABLE usuarios (
     username VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(150) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
+    tipo ENUM('usuario', 'admin') DEFAULT 'usuario',
+    primeiro_acesso TINYINT(1) DEFAULT 0,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -107,6 +110,17 @@ CREATE TABLE livros (
     capa VARCHAR(255) NOT NULL,
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE comentarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    livro_id INT NOT NULL,
+    usuario VARCHAR(100) NOT NULL,
+    comentario TEXT NOT NULL,
+    nota INT,
+    data DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (livro_id) REFERENCES livros(id)
+);
+
 ```
 
 ---
