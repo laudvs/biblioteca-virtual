@@ -8,15 +8,25 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $livro_id = $_POST['livro_id'];
-    $usuario_id = $_POST['usuario_id'];
-    $comentario = $_POST['comentario'];
-    $nota = $_POST['nota'];
+    $livro_id = isset($_POST['livro_id']) ? (int) $_POST['livro_id'] : 0;
+    $usuario = $_SESSION['usuario'];
+    $comentario = isset($_POST['comentario']) ? trim($_POST['comentario']) : '';
+    $nota = isset($_POST['nota']) ? (int) $_POST['nota'] : null;
 
-    $stmt = $conn->prepare("INSERT INTO comentarios (livro_id, usuario_id, comentario, nota) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("iisi", $livro_id, $usuario_id, $comentario, $nota);
+    if ($livro_id <= 0 || $comentario === '' || $nota === null) {
+        header("Location: ../front-end/index.php");
+        exit();
+    }
+
+    $stmt = $conn->prepare("INSERT INTO comentarios (livro_id, usuario, comentario, nota) VALUES (?, ?, ?, ?)");
+    if ($stmt === false) {
+        die('Erro na preparação: ' . $conn->error);
+    }
+    $stmt->bind_param("issi", $livro_id, $usuario, $comentario, $nota);
     $stmt->execute();
-    header("Location: ../front-end/livros.php?id=" . $livro_id);
+    $stmt->close();
+
+    header("Location: ../front-end/index.php#livro-" . $livro_id);
     exit();
 }
 ?>

@@ -1,6 +1,17 @@
 <?php 
 session_start();
+include_once '../back-end/conexao.php';
 $logado = isset($_SESSION['usuario']);
+
+// Busca livros do banco
+$livros = [];
+$res = $conn->query("SELECT * FROM livros ORDER BY id DESC");
+if ($res) {
+  while ($row = $res->fetch_assoc()) {
+    $livros[] = $row;
+  }
+  $res->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,40 +60,76 @@ $logado = isset($_SESSION['usuario']);
 <h2><i class="fa-solid fa-star"></i> Destaques da Comunidade</h2>
 <div class="livros-grid">
 
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/71y3Wua1b5L._SL1500_.jpg">
-<h3>Livrai-nos do Mal</h3>
-<p>Rose Wilding</p>
-<span class="nota">⭐ 4.9</span>
-</div>
+<?php if (count($livros) > 0): ?>
+  <?php foreach ($livros as $livro): ?>
+    <?php
+    // busca comentários do livro
+    $comentarios = [];
+    $stmt = $conn->prepare("SELECT usuario, comentario, nota, data FROM comentarios WHERE livro_id = ? ORDER BY data DESC");
+    if ($stmt) {
+      $stmt->bind_param('i', $livro['id']);
+      $stmt->execute();
+      $resC = $stmt->get_result();
+      while ($c = $resC->fetch_assoc()) { $comentarios[] = $c; }
+      $stmt->close();
+    }
+    ?>
 
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/919+LCGBrML._SL1500_.jpg">
-<h3>A mágica mortal</h3>
-<p>Raphael Montes</p>
-<span class="nota">⭐ 4.5</span>
-</div>
+    <div class="livro-card" id="livro-<?= $livro['id'] ?>">
+      <img src="<?= htmlspecialchars($livro['capa']); ?>" alt="Capa">
+      <h3><?= htmlspecialchars($livro['titulo']); ?></h3>
+      <p><?= htmlspecialchars($livro['autor']); ?></p>
 
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/812RDxFDd8L._SL1500_.jpg">
-<h3>Noiva</h3>
-<p>Ali Hazelwood</p>
-<span class="nota">⭐ 3.9</span>
-</div>
+      <!-- Média das notas -->
+      <?php
+      $media = null;
+      if (count($comentarios) > 0) {
+        $soma = 0; foreach ($comentarios as $c) { $soma += (int)$c['nota']; }
+        $media = round($soma / count($comentarios), 1);
+      }
+      ?>
+      <span class="nota">⭐ <?= $media !== null ? $media : '—' ?></span>
 
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/91SDZ2eUj+L._SL1500_.jpg">
-<h3>Verity</h3>
-<p>Colleen Hoover</p>
-<span class="nota">⭐ 4.3</span>
-</div>
+      <!-- Lista de comentários -->
+      <div class="comentarios">
+        <?php if (count($comentarios) > 0): ?>
+          <?php foreach ($comentarios as $c): ?>
+            <div class="comentario-item">
+              <strong><?= htmlspecialchars($c['usuario']); ?></strong>
+              <span class="nota-pequena">⭐ <?= (int)$c['nota'] ?></span>
+              <p><?= nl2br(htmlspecialchars($c['comentario'])); ?></p>
+              <small><?= htmlspecialchars($c['data']); ?></small>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p class="sem-comentarios">Seja o primeiro a comentar!</p>
+        <?php endif; ?>
+      </div>
 
-<div class="livro-card">
-<img src="https://m.media-amazon.com/images/I/81BTIjoeeYL._SL1500_.jpg">
-<h3>Textos para tocar cicatrizes</h3>
-<p>Igor Pires</p>
-<span class="nota">⭐ 4.0</span>
-</div>
+      <!-- Formulário para adicionar comentário (apenas para usuários logados) -->
+      <?php if ($logado): ?>
+        <form action="../back-end/comentarios.php" method="POST" class="form-comentario">
+          <input type="hidden" name="livro_id" value="<?= $livro['id'] ?>">
+          <label>Comentário:</label>
+          <textarea name="comentario" rows="2" required></textarea>
+          <label>Nota:</label>
+          <select name="nota" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+          </select>
+          <button type="submit">Enviar</button>
+        </form>
+      <?php else: ?>
+        <p><a href="login.php">Entre</a> para comentar e avaliar.</p>
+      <?php endif; ?>
+    </div>
+  <?php endforeach; ?>
+<?php else: ?>
+  <p>Nenhum livro cadastrado ainda.</p>
+<?php endif; ?>
 
 </div>
 </section>

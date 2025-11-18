@@ -23,6 +23,9 @@
 
                 <label for="password">Senha:</label>
                 <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                <label>
+                    <input type="checkbox" name="login_admin"> Entrar como administrador
+                </label>
 
                 <button type="submit">Entrar</button>
             </form>

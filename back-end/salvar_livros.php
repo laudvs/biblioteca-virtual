@@ -12,12 +12,12 @@ include("conexao.php");
 $titulo = $_POST['titulo'];
 $autor = $_POST['autor'];
 $descricao = $_POST['descricao'];
-$imagem = $_POST['imagem'];
+$capa = $_POST['capa'];
 
 // Insere no banco
-$sql = "INSERT INTO livros (titulo, autor, descricao, imagem) VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO livros (titulo, autor, descricao, capa) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ssss", $titulo, $autor, $descricao, $imagem);
+$stmt->bind_param("ssss", $titulo, $autor, $descricao, $capa);
 
 if ($stmt->execute()) {
     $_SESSION['message'] = "✅ Livro adicionado com sucesso!";
