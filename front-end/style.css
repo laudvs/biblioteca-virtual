@@ -107,6 +107,64 @@ img {
   color: #7f00ff;
 }
 
+/* ====== FILTRO DE BUSCA ====== */
+.filtro-container {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filtro-container input {
+  padding: 12px 20px;
+  border: 2px solid #7f00ff;
+  border-radius: 25px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 400px;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.3s;
+}
+
+.filtro-container input:focus {
+  outline: none;
+  border-color: #e100ff;
+  box-shadow: 0 0 10px rgba(127, 0, 255, 0.3);
+}
+
+.filtro-container button {
+  padding: 12px 25px;
+  background: linear-gradient(90deg, #7f00ff, #e100ff);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.filtro-container button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.resultado-busca {
+  text-align: center;
+  color: #7f00ff;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  min-height: 30px;
+}
+
+.nenhum-resultado {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  font-size: 1.1rem;
+}
+
 .livros-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

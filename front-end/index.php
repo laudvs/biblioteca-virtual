@@ -58,7 +58,15 @@ if ($res) {
 
 <section class="destaques">
 <h2><i class="fa-solid fa-star"></i> Destaques da Comunidade</h2>
-<div class="livros-grid">
+
+<!-- FILTRO DE BUSCA -->
+<div class="filtro-container">
+  <input type="text" id="filtro-busca" placeholder="🔍 Buscar por título ou autor..." autocomplete="off">
+  <button type="button" onclick="limparFiltro()">Limpar</button>
+</div>
+<div id="resultado-busca" class="resultado-busca"></div>
+
+<div class="livros-grid" id="livros-container">
 
 <?php if (count($livros) > 0): ?>
   <?php foreach ($livros as $livro): ?>
@@ -133,6 +141,53 @@ if ($res) {
 
 </div>
 </section>
+
+<!-- SCRIPT DE FILTRO -->
+<script>
+const filtroInput = document.getElementById('filtro-busca');
+const livrosContainer = document.getElementById('livros-container');
+const resultadoBusca = document.getElementById('resultado-busca');
+const livrosCards = Array.from(livrosContainer.querySelectorAll('.livro-card'));
+
+filtroInput.addEventListener('input', function() {
+  const termo = this.value.toLowerCase().trim();
+  
+  if (termo === '') {
+    livrosCards.forEach(card => card.style.display = 'block');
+    resultadoBusca.textContent = '';
+    return;
+  }
+  
+  let encontrados = 0;
+  
+  livrosCards.forEach(card => {
+    const titulo = card.querySelector('h3').textContent.toLowerCase();
+    const autor = card.querySelector('p').textContent.toLowerCase();
+    
+    if (titulo.includes(termo) || autor.includes(termo)) {
+      card.style.display = 'block';
+      encontrados++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  
+  if (encontrados === 0) {
+    resultadoBusca.textContent = `❌ Nenhum livro encontrado para "${termo}"`;
+    resultadoBusca.style.color = '#ff4c4c';
+  } else {
+    resultadoBusca.textContent = `✅ ${encontrados} livro(s) encontrado(s)`;
+    resultadoBusca.style.color = '#7f00ff';
+  }
+});
+
+function limparFiltro() {
+  filtroInput.value = '';
+  livrosCards.forEach(card => card.style.display = 'block');
+  resultadoBusca.textContent = '';
+  filtroInput.focus();
+}
+</script>
 
 <section class="sobre">
 <h2><i class="fa-solid fa-heart"></i> Sobre o Booklovers</h2>
