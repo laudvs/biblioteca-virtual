@@ -145,6 +145,13 @@ CREATE TABLE comentarios (
 
 ---
 
+## ⚙️ **Como acessar o projeto**
+
+1. Acesse pelo navegador:
+   👉 [Booklovers](https://booklovers.infinityfree.me/?i=1)
+
+---
+
 ## 💜 **Desenvolvido por**
 
 👩‍💻 **Laurah Dias**
