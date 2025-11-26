@@ -151,6 +151,11 @@ CREATE TABLE comentarios (
    👉 [Booklovers](https://booklovers.infinityfree.me/?i=1)
 
 ---
+## ⚙️ **Visualizar vídeo explicativo**
+1. Clique no link abaixo:
+   👉 [vídeo no drive](https://drive.google.com/file/d/1T0UriKpcRiLXM-g9XzXlQA49lKF5o2jo/view?usp=sharing)
+    
+---
 
 ## 💜 **Desenvolvido por**
 
